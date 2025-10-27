@@ -3,18 +3,18 @@
   "name": "webapp",
   "compatibility_date": "2024-01-01",
   "compatibility_flags": ["nodejs_compat"],
-  "pages_build_output_dir": "./dist",
+  "pages_build_output_dir": "./dist"
 
-  // D1 Database configuration
+  // D1 Database configuration (commented out for demo)
   // IMPORTANT: Run 'npm run db:create' first to create the database
   // Then update the database_id below with the ID from the output
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "webapp-production",
-      "database_id": "REPLACE_WITH_YOUR_DATABASE_ID"
-    }
-  ]
+  // "d1_databases": [
+  //   {
+  //     "binding": "DB",
+  //     "database_name": "webapp-production",
+  //     "database_id": "REPLACE_WITH_YOUR_DATABASE_ID"
+  //   }
+  // ]
 
   // Add other bindings as needed:
   // KV Storage: Uncomment and configure if needed
