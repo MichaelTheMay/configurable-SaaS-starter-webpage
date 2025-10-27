@@ -6,6 +6,99 @@
  */
 
 export const siteConfig = {
+  // ==================== UI THEME CONFIGURATION ====================
+  theme: {
+    // Color Scheme
+    colors: {
+      primary: "#667eea",        // Main brand color (buttons, links, accents)
+      primaryDark: "#764ba2",    // Darker shade for gradients
+      secondary: "#4c9aff",      // Secondary accent color
+      success: "#10b981",        // Success messages
+      error: "#ef4444",          // Error messages
+      warning: "#f59e0b",        // Warning messages
+      background: "#f9fafb",     // Page background
+      surface: "#ffffff",        // Card/surface background
+      text: {
+        primary: "#111827",      // Main text color
+        secondary: "#6b7280",    // Secondary text color
+        light: "#9ca3af",        // Light text color
+      },
+    },
+    
+    // Typography
+    fonts: {
+      primary: "'Inter', sans-serif",     // Main font family
+      heading: "'Inter', sans-serif",     // Heading font family
+      mono: "'Fidelity Mono', monospace", // Monospace font
+    },
+    
+    // Font Sizes (Tailwind scale)
+    fontSize: {
+      xs: "0.75rem",
+      sm: "0.875rem",
+      base: "1rem",
+      lg: "1.125rem",
+      xl: "1.25rem",
+      "2xl": "1.5rem",
+      "3xl": "1.875rem",
+      "4xl": "2.25rem",
+      "5xl": "3rem",
+      "6xl": "3.75rem",
+    },
+    
+    // Border Radius
+    borderRadius: {
+      sm: "0.25rem",
+      md: "0.5rem",
+      lg: "0.75rem",
+      xl: "1rem",
+      "2xl": "1.5rem",
+      full: "9999px",
+    },
+    
+    // Shadows
+    shadows: {
+      sm: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+      md: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+      lg: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
+      xl: "0 20px 25px -5px rgb(0 0 0 / 0.1)",
+    },
+    
+    // Layout
+    layout: {
+      maxWidth: "1280px",        // Max content width
+      headerHeight: "4rem",      // Header height
+      navPosition: "fixed",      // fixed, sticky, or relative
+    },
+    
+    // Button Styles
+    buttons: {
+      primary: {
+        background: "primary",
+        hoverBackground: "primaryDark",
+        textColor: "#ffffff",
+        borderRadius: "lg",
+        padding: "0.75rem 2rem",
+      },
+      secondary: {
+        background: "transparent",
+        hoverBackground: "rgba(255,255,255,0.2)",
+        textColor: "primary",
+        borderRadius: "lg",
+        border: "2px solid",
+        padding: "0.75rem 2rem",
+      },
+    },
+    
+    // Card Styles
+    cards: {
+      borderRadius: "xl",
+      shadow: "lg",
+      padding: "2rem",
+      hoverTransform: "translateY(-5px)",
+    },
+  },
+
   // ==================== COMPANY INFORMATION ====================
   company: {
     name: "{{COMPANY_NAME}}",
@@ -306,6 +399,119 @@ export const siteConfig = {
       notificationEmail: "{{NOTIFICATION_EMAIL}}",
     },
   },
+
+  // ==================== CUSTOM PAGES ====================
+  pages: [
+    {
+      path: "/about",
+      title: "About Us",
+      inMenu: true,
+      content: {
+        hero: {
+          title: "{{ABOUT_PAGE_TITLE}}",
+          subtitle: "{{ABOUT_PAGE_SUBTITLE}}",
+        },
+        sections: [
+          {
+            type: "text",
+            title: "{{ABOUT_SECTION_1_TITLE}}",
+            content: "{{ABOUT_SECTION_1_CONTENT}}",
+          },
+          {
+            type: "team",
+            title: "Meet Our Team",
+            members: [
+              {
+                name: "{{TEAM_MEMBER_1_NAME}}",
+                role: "{{TEAM_MEMBER_1_ROLE}}",
+                bio: "{{TEAM_MEMBER_1_BIO}}",
+                image: "/static/team/member1.jpg",
+                social: {
+                  linkedin: "{{TEAM_MEMBER_1_LINKEDIN}}",
+                  twitter: "{{TEAM_MEMBER_1_TWITTER}}",
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+    {
+      path: "/privacy",
+      title: "Privacy Policy",
+      inMenu: false,
+      content: {
+        hero: {
+          title: "Privacy Policy",
+          subtitle: "Last updated: {{PRIVACY_LAST_UPDATED}}",
+        },
+        sections: [
+          {
+            type: "text",
+            title: "Information We Collect",
+            content: "{{PRIVACY_SECTION_1}}",
+          },
+          {
+            type: "text",
+            title: "How We Use Your Information",
+            content: "{{PRIVACY_SECTION_2}}",
+          },
+          {
+            type: "text",
+            title: "Data Security",
+            content: "{{PRIVACY_SECTION_3}}",
+          },
+        ],
+      },
+    },
+    {
+      path: "/terms",
+      title: "Terms of Service",
+      inMenu: false,
+      content: {
+        hero: {
+          title: "Terms of Service",
+          subtitle: "Last updated: {{TERMS_LAST_UPDATED}}",
+        },
+        sections: [
+          {
+            type: "text",
+            title: "Acceptance of Terms",
+            content: "{{TERMS_SECTION_1}}",
+          },
+          {
+            type: "text",
+            title: "Use License",
+            content: "{{TERMS_SECTION_2}}",
+          },
+        ],
+      },
+    },
+    {
+      path: "/blog",
+      title: "Blog",
+      inMenu: true,
+      content: {
+        hero: {
+          title: "Our Blog",
+          subtitle: "Latest updates and insights",
+        },
+        type: "blog_list",
+      },
+    },
+    {
+      path: "/contact",
+      title: "Contact Us",
+      inMenu: true,
+      content: {
+        hero: {
+          title: "Get in Touch",
+          subtitle: "We'd love to hear from you",
+        },
+        type: "contact_form",
+      },
+    },
+  ],
 };
 
 // Example populated configuration (for reference)

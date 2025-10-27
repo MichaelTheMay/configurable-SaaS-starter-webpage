@@ -2,6 +2,8 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { serveStatic } from 'hono/cloudflare-workers'
 import { siteConfig } from '../config'
+import { renderCustomPage, renderNavigation, renderFooter } from './pages'
+import { generateThemeCSS, generateTailwindConfig, getFontImports } from './theme'
 
 type Bindings = {
   DB?: D1Database;
@@ -17,6 +19,16 @@ app.use('/api/*', cors())
 
 // Serve static files
 app.use('/static/*', serveStatic({ root: './public' }))
+
+// ==================== DYNAMIC PAGE ROUTING ====================
+// Register all custom pages from config
+siteConfig.pages.forEach(page => {
+  app.get(page.path, (c) => {
+    const html = renderCustomPage(page.path)
+    if (!html) return c.notFound()
+    return c.html(html)
+  })
+})
 
 // ==================== MAIN PAGE ====================
 app.get('/', (c) => {
@@ -210,6 +222,8 @@ app.get('/api/config', (c) => {
 
 // ==================== HTML RENDERERS ====================
 function renderHomePage() {
+  const menuPages = siteConfig.pages.filter(p => p.inMenu)
+  
   return `
     <!DOCTYPE html>
     <html lang="en">
@@ -222,55 +236,28 @@ function renderHomePage() {
         <meta property="og:image" content="${siteConfig.seo.ogImage}">
         <link rel="icon" href="${siteConfig.company.favicon}">
         
+        ${getFontImports()}
         <script src="https://cdn.tailwindcss.com"></script>
+        ${generateTailwindConfig()}
+        ${generateThemeCSS()}
         <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
         <script src="https://js.stripe.com/v3/"></script>
-        
-        <style>
-          .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          }
-          .glass-effect {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-          }
-        </style>
+        <link href="/static/styles.css" rel="stylesheet">
     </head>
-    <body class="bg-gray-50">
-        <!-- Navigation -->
-        <nav class="bg-white shadow-sm fixed w-full top-0 z-50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between h-16 items-center">
-                    <div class="flex items-center">
-                        <img src="${siteConfig.company.logo}" alt="${siteConfig.company.name}" class="h-8 w-auto mr-2">
-                        <span class="text-xl font-bold text-gray-800">${siteConfig.company.name}</span>
-                    </div>
-                    <div class="hidden md:flex space-x-8">
-                        <a href="#features" class="text-gray-600 hover:text-gray-900">Features</a>
-                        <a href="#pricing" class="text-gray-600 hover:text-gray-900">Pricing</a>
-                        <a href="#testimonials" class="text-gray-600 hover:text-gray-900">Testimonials</a>
-                        <a href="#contact" class="text-gray-600 hover:text-gray-900">Contact</a>
-                    </div>
-                    <div class="flex space-x-4">
-                        <a href="/login" class="text-gray-600 hover:text-gray-900">Login</a>
-                        <a href="/signup" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">Sign Up</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+    <body>
+        ${renderNavigation()}
 
         <!-- Hero Section -->
         <section class="gradient-bg text-white pt-32 pb-20">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h1 class="text-5xl md:text-6xl font-bold mb-6">${siteConfig.hero.headline}</h1>
-                <p class="text-xl md:text-2xl mb-8 text-purple-100">${siteConfig.hero.subheadline}</p>
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 font-heading">${siteConfig.hero.headline}</h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-90">${siteConfig.hero.subheadline}</p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="${siteConfig.hero.ctaButton.link}" class="bg-white text-purple-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition">
+                    <a href="${siteConfig.hero.ctaButton.link}" class="btn-primary">
                         ${siteConfig.hero.ctaButton.text}
                     </a>
-                    <a href="${siteConfig.hero.secondaryButton.link}" class="glass-effect text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:bg-opacity-20 transition">
+                    <a href="${siteConfig.hero.secondaryButton.link}" class="btn-secondary bg-white bg-opacity-10 border-white text-white">
                         ${siteConfig.hero.secondaryButton.text}
                     </a>
                 </div>
@@ -281,13 +268,13 @@ function renderHomePage() {
         <section id="features" class="py-20 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold text-gray-900 mb-4">Features</h2>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4 font-heading">Features</h2>
                     <p class="text-xl text-gray-600">Everything you need to succeed</p>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     ${siteConfig.features.map(feature => `
-                        <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition">
-                            <i class="${feature.icon} text-4xl text-purple-600 mb-4"></i>
+                        <div class="card">
+                            <i class="${feature.icon} text-4xl mb-4" style="color: var(--color-primary)"></i>
                             <h3 class="text-xl font-bold text-gray-900 mb-2">${feature.title}</h3>
                             <p class="text-gray-600">${feature.description}</p>
                         </div>
@@ -297,29 +284,29 @@ function renderHomePage() {
         </section>
 
         <!-- Pricing Section -->
-        <section id="pricing" class="py-20 bg-gray-50">
+        <section id="pricing" class="py-20" style="background-color: var(--color-background)">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold text-gray-900 mb-4">${siteConfig.pricing.title}</h2>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4 font-heading">${siteConfig.pricing.title}</h2>
                     <p class="text-xl text-gray-600">${siteConfig.pricing.subtitle}</p>
                 </div>
                 <div class="grid md:grid-cols-3 gap-8">
                     ${siteConfig.pricing.plans.map(plan => `
-                        <div class="bg-white rounded-xl shadow-lg p-8 ${plan.highlighted ? 'ring-4 ring-purple-600 transform scale-105' : ''}">
-                            ${plan.highlighted ? '<div class="bg-purple-600 text-white text-sm font-semibold px-3 py-1 rounded-full inline-block mb-4">Most Popular</div>' : ''}
+                        <div class="card ${plan.highlighted ? 'ring-4 transform scale-105' : ''}" style="${plan.highlighted ? 'ring-color: var(--color-primary)' : ''}">
+                            ${plan.highlighted ? '<div class="text-white text-sm font-semibold px-3 py-1 rounded-full inline-block mb-4" style="background-color: var(--color-primary)">Most Popular</div>' : ''}
                             <h3 class="text-2xl font-bold text-gray-900 mb-2">${plan.name}</h3>
                             <p class="text-gray-600 mb-4">${plan.description}</p>
                             <div class="mb-6">
                                 <span class="text-5xl font-bold text-gray-900">${plan.price}</span>
                                 <span class="text-gray-600">/${plan.period}</span>
                             </div>
-                            <button onclick="handleSubscribe('${plan.stripePriceId}')" class="w-full bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transition mb-6">
+                            <button onclick="handleSubscribe('${plan.stripePriceId}')" class="w-full btn-primary mb-6">
                                 Get Started
                             </button>
                             <ul class="space-y-3">
                                 ${plan.features.map(feature => `
                                     <li class="flex items-start">
-                                        <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                                        <i class="fas fa-check mr-2 mt-1" style="color: var(--color-success)"></i>
                                         <span class="text-gray-700">${feature}</span>
                                     </li>
                                 `).join('')}
@@ -403,47 +390,15 @@ function renderHomePage() {
         <!-- CTA Section -->
         <section class="gradient-bg text-white py-20">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-4xl font-bold mb-4">${siteConfig.cta.title}</h2>
-                <p class="text-xl mb-8 text-purple-100">${siteConfig.cta.subtitle}</p>
-                <a href="${siteConfig.cta.buttonLink}" class="bg-white text-purple-600 px-8 py-4 rounded-lg text-lg font-semibold inline-block hover:bg-gray-100 transition">
+                <h2 class="text-4xl font-bold mb-4 font-heading">${siteConfig.cta.title}</h2>
+                <p class="text-xl mb-8 opacity-90">${siteConfig.cta.subtitle}</p>
+                <a href="${siteConfig.cta.buttonLink}" class="btn-primary bg-white text-gray-900 hover:bg-gray-100">
                     ${siteConfig.cta.buttonText}
                 </a>
             </div>
         </section>
 
-        <!-- Footer -->
-        <footer class="bg-gray-900 text-white py-12">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid md:grid-cols-4 gap-8 mb-8">
-                    <div>
-                        <div class="flex items-center mb-4">
-                            <img src="${siteConfig.company.logo}" alt="${siteConfig.company.name}" class="h-8 w-auto mr-2 brightness-0 invert">
-                            <span class="text-xl font-bold">${siteConfig.company.name}</span>
-                        </div>
-                        <p class="text-gray-400 mb-4">${siteConfig.company.tagline}</p>
-                        <div class="flex space-x-4">
-                            ${siteConfig.social.twitter ? `<a href="${siteConfig.social.twitter}" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>` : ''}
-                            ${siteConfig.social.facebook ? `<a href="${siteConfig.social.facebook}" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>` : ''}
-                            ${siteConfig.social.linkedin ? `<a href="${siteConfig.social.linkedin}" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin"></i></a>` : ''}
-                            ${siteConfig.social.github ? `<a href="${siteConfig.social.github}" class="text-gray-400 hover:text-white"><i class="fab fa-github"></i></a>` : ''}
-                        </div>
-                    </div>
-                    ${siteConfig.footer.columns.map(column => `
-                        <div>
-                            <h3 class="font-semibold mb-4">${column.title}</h3>
-                            <ul class="space-y-2">
-                                ${column.links.map(link => `
-                                    <li><a href="${link.url}" class="text-gray-400 hover:text-white">${link.text}</a></li>
-                                `).join('')}
-                            </ul>
-                        </div>
-                    `).join('')}
-                </div>
-                <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
-                    <p>${siteConfig.footer.copyright}</p>
-                </div>
-            </div>
-        </footer>
+        ${renderFooter()}
 
         <script src="/static/app.js"></script>
     </body>
