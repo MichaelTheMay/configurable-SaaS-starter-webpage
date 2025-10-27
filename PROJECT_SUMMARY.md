@@ -185,15 +185,18 @@ npm run git:log            # View commit history
 
 ## 🌐 Live Demo
 
-Your website is currently running at:
+**Production Demo:** [https://configurable-saas-template.pages.dev](https://configurable-saas-template.pages.dev)
+
+Your website is also running locally:
 - **Local**: http://localhost:3000
-- **Public**: https://3000-itbup1iiwmpcejs833zr0-2b54fc91.sandbox.novita.ai
+- **Sandbox**: https://3000-itbup1iiwmpcejs833zr0-2b54fc91.sandbox.novita.ai
 
 Try it out:
 1. Visit homepage to see all sections
 2. Click "Get Started" to see pricing
 3. Fill out contact form at bottom
 4. Go to /signup or /login for auth pages
+5. Explore /about, /blog, /contact pages
 
 ## 📋 Pre-Deployment Checklist
 

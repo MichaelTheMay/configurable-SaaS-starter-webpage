@@ -1,6 +1,31 @@
 # SaaS Website Template
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-configurable--saas--template.pages.dev-blue?style=for-the-badge&logo=cloudflare)](https://configurable-saas-template.pages.dev)
+[![GitHub](https://img.shields.io/badge/GitHub-configurable--SaaS--starter--webpage-black?style=for-the-badge&logo=github)](https://github.com/MichaelTheMay/configurable-SaaS-starter-webpage)
+
 A production-ready SaaS company website template with integrated authentication, Stripe payments, and lead generation. Built with Hono framework for Cloudflare Pages.
+
+## 🌐 Live Demo
+
+**See it in action:** [https://configurable-saas-template.pages.dev](https://configurable-saas-template.pages.dev)
+
+The demo showcases all features with placeholder content. You can explore:
+- 🏠 **Homepage** - Hero, features, pricing, testimonials
+- 📄 **Custom Pages** - About, Blog, Contact pages
+- 🎨 **Default Theme** - Modern purple gradient theme
+- 🔐 **Auth Pages** - Login and signup interfaces
+
+**Note:** The demo uses placeholder data. Replace `{{PLACEHOLDERS}}` in `config.ts` with your actual content.
+
+### Demo Pages Available
+- **Home** (`/`) - Full landing page with all sections
+- **About** (`/about`) - About page with team section
+- **Blog** (`/blog`) - Blog placeholder page
+- **Contact** (`/contact`) - Contact form page
+- **Privacy** (`/privacy`) - Privacy policy page
+- **Terms** (`/terms`) - Terms of service page
+- **Login** (`/login`) - User login page
+- **Signup** (`/signup`) - User registration page
 
 ## 🎯 Features
 
