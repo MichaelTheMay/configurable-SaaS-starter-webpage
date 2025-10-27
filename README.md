@@ -38,7 +38,14 @@ The demo showcases all features with placeholder content. You can explore:
 - **Responsive Design**: Mobile-first design with Tailwind CSS
 - **API Routes**: RESTful API endpoints for all features
 - **Configuration System**: Single config.ts file for all customization
-- **🎨 UI Theme System**: Fully configurable colors, fonts, shadows, and styles
+- **🎨 Advanced Theme System**: 
+  - 6 button variants (solid, outline, ghost, gradient, small, large)
+  - 5 card styles (default, flat, elevated, outlined, gradient)
+  - Complete typography control (9 font sizes, weights, line heights, letter spacing)
+  - Comprehensive color system (primary/secondary with light/dark variants)
+  - Full spacing scale (40+ spacing values)
+  - Component-specific styling (navbar, footer, forms, hero, features, pricing, testimonials)
+  - Animation controls (enable/disable, durations, easing)
 - **📄 Dynamic Page Routing**: Automatic page generation from config
 - **🎯 Component Library**: Themed buttons, cards, and navigation
 
@@ -426,69 +433,97 @@ npm run db:console:local -- --command="SELECT * FROM users"
 npm run db:console:prod -- --command="SELECT * FROM leads WHERE status='new'"
 ```
 
-## 🎨 UI Theme Customization
+## 🎨 Comprehensive Styling System
 
-The template includes a powerful theme system that lets you customize every visual aspect from the config file.
+This template features the **most configurable styling system** available - every visual aspect is controlled through `config.ts`.
 
-### Theme Configuration Options
+### 📖 Complete Documentation
 
-#### Colors
-- `primary` - Main brand color (buttons, links, accents)
-- `primaryDark` - Darker shade for gradients/hovers
-- `secondary` - Secondary accent color
-- `success/error/warning` - Status colors
-- `background/surface` - Page and card backgrounds
-- `text.primary/secondary/light` - Text colors
+For the full styling guide with examples, see:
+- **[STYLING_GUIDE.md](./STYLING_GUIDE.md)** - Complete styling configuration guide (15,000+ words)
+- **[THEME_EXAMPLES.md](./THEME_EXAMPLES.md)** - 6+ ready-to-use theme presets
 
-#### Typography
-- `fonts.primary` - Main body font (supports Google Fonts)
-- `fonts.heading` - Heading font
-- `fonts.mono` - Monospace font
-- `fontSize` - Complete Tailwind scale
+### Quick Overview
 
-#### Layout
-- `maxWidth` - Maximum content width
-- `headerHeight` - Navigation bar height
-- `navPosition` - Fixed, sticky, or relative navigation
+#### Button Variants (6 styles)
+```html
+<button class="btn-primary">Primary</button>
+<button class="btn-secondary">Secondary</button>
+<button class="btn-ghost">Ghost</button>
+<button class="btn-gradient">Gradient</button>
+<button class="btn-small">Small</button>
+<button class="btn-large">Large</button>
+```
 
-#### Components
-- `borderRadius` - Border radius for all components
-- `shadows` - Box shadow system (sm, md, lg, xl)
-- `buttons` - Complete button style definitions
-- `cards` - Card styling and hover effects
+#### Card Variants (5 styles)
+```html
+<div class="card-default">Default Card</div>
+<div class="card-flat">Flat Card</div>
+<div class="card-elevated">Elevated Card</div>
+<div class="card-outlined">Outlined Card</div>
+<div class="card-gradient">Gradient Card</div>
+```
 
-### Quick Theme Examples
-
-**Modern Blue Theme:**
+#### Component Configuration
+Every component has individual styling controls:
 ```typescript
-colors: {
-  primary: "#3b82f6",
-  primaryDark: "#2563eb",
-  // ...
+components: {
+  navbar: { /* height, colors, spacing */ },
+  footer: { /* layout, colors, gaps */ },
+  forms: { /* inputs, labels, validation */ },
+  hero: { /* background, sizes, alignment */ },
+  features: { /* icons, grid, gaps */ },
+  pricing: { /* highlighting, badges */ },
+  testimonials: { /* avatars, ratings */ },
 }
 ```
 
-**Warm Orange Theme:**
+#### Animation Controls
 ```typescript
-colors: {
-  primary: "#f97316",
-  primaryDark: "#ea580c",
-  // ...
+animations: {
+  enabled: true,  // Master toggle
+  duration: { fast: "150ms", normal: "300ms", slow: "500ms" },
+  hoverScale: "1.05",
+  hoverTranslateY: "-5px",
 }
 ```
 
-**Professional Dark Theme:**
+### Quick Theme Change
+
+Change your entire website theme in seconds:
+
 ```typescript
-colors: {
-  primary: "#8b5cf6",
-  background: "#1f2937",
-  surface: "#111827",
-  text: {
-    primary: "#f9fafb",
-    secondary: "#d1d5db",
+// Modern Blue Theme
+theme: {
+  colors: {
+    primary: "#3b82f6",
+    primaryDark: "#2563eb",
+    // ...
+  }
+}
+
+// Or Vibrant Startup Theme
+theme: {
+  colors: {
+    primary: "#ec4899",  // Pink
+    primaryDark: "#db2777",
+    secondary: "#8b5cf6",  // Purple
+    // ...
+  }
+}
+
+// Or Minimalist Dark Theme
+theme: {
+  colors: {
+    primary: "#22c55e",
+    background: "#0f172a",
+    surface: "#1e293b",
+    text: { primary: "#f1f5f9" }
   }
 }
 ```
+
+See `STYLING_GUIDE.md` for complete examples and configuration options!
 
 ## 📄 Dynamic Page System
 
