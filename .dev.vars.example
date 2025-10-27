@@ -1,0 +1,23 @@
+# Environment Variables Template
+# Copy this file to .dev.vars for local development
+# For production, use: wrangler secret put <KEY_NAME>
+
+# Stripe Configuration
+# Get these from: https://dashboard.stripe.com/apikeys
+STRIPE_SECRET_KEY=sk_test_xxxxxxxxxxxxxxxxxxxxx
+
+# Email Service (Resend)
+# Get this from: https://resend.com/api-keys
+RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxx
+
+# JWT Secret for authentication
+# Generate a random string: openssl rand -base64 32
+JWT_SECRET=your-super-secret-jwt-key-here
+
+# Google OAuth (optional)
+# Get from: https://console.cloud.google.com/apis/credentials
+GOOGLE_CLIENT_SECRET=xxxxxxxxxxxxxxxxxxxxx
+
+# GitHub OAuth (optional)
+# Get from: https://github.com/settings/developers
+GITHUB_CLIENT_SECRET=xxxxxxxxxxxxxxxxxxxxx
