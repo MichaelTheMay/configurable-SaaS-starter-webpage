@@ -4,8 +4,10 @@
 
 | File | Purpose |
 |------|---------|
-| `config.ts` | **Main configuration - Edit this to customize** |
+| `config.ts` | **Main configuration - Edit this to customize EVERYTHING** |
 | `CONFIGURATION_GUIDE.md` | Complete guide to all config options |
+| `THEME_EXAMPLES.md` | **🎨 NEW: Ready-to-use theme presets** |
+| `PAGES_GUIDE.md` | **📄 NEW: How to create custom pages** |
 | `SETUP.md` | Step-by-step setup instructions |
 | `README.md` | Full technical documentation |
 | `PROJECT_SUMMARY.md` | Project overview and status |
@@ -70,6 +72,23 @@ All placeholders in `config.ts` follow this pattern: `{{PLACEHOLDER_NAME}}`
 - Testimonials (3 total)
 - Social media links
 - Lead form fields
+
+### 🎨 NEW: Theme Customization
+- **Colors**: Primary, secondary, backgrounds
+- **Fonts**: Body and heading fonts (Google Fonts)
+- **Layout**: Max width, nav position
+- **Buttons**: Complete button styles
+- **Cards**: Card styling and shadows
+
+**Quick Start**: Copy a preset from `THEME_EXAMPLES.md`!
+
+### 📄 NEW: Custom Pages
+- Define pages in `pages` array
+- Set `inMenu: true` to add to navigation
+- Support for text, team, contact, blog sections
+- Automatic routing and styling
+
+**Quick Start**: See examples in `PAGES_GUIDE.md`!
 
 ## 🔌 Integrations Setup
 
@@ -168,6 +187,41 @@ https://3000-itbup1iiwmpcejs833zr0-2b54fc91.sandbox.novita.ai
 5. **Overview**: See `PROJECT_SUMMARY.md`
 
 ## 🎨 Customization Quick Tips
+
+### Change Theme Colors
+```typescript
+// config.ts → theme.colors
+colors: {
+  primary: "#f97316",      // Your brand color
+  primaryDark: "#ea580c",  // Darker shade
+  // ... copy from THEME_EXAMPLES.md
+}
+```
+
+### Change Fonts
+```typescript
+// config.ts → theme.fonts
+fonts: {
+  primary: "'Poppins', sans-serif",
+  heading: "'Montserrat', sans-serif",
+}
+```
+
+### Add a Custom Page
+```typescript
+// config.ts → pages array
+{
+  path: "/about",
+  title: "About Us",
+  inMenu: true,
+  content: {
+    hero: { title: "About", subtitle: "Our Story" },
+    sections: [
+      { type: "text", title: "Who We Are", content: "..." }
+    ]
+  }
+}
+```
 
 ### Add a Feature
 ```typescript
