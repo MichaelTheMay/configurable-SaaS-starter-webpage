@@ -118,13 +118,26 @@ All placeholders in `config.ts` follow this pattern: `{{PLACEHOLDER_NAME}}`
 
 ## 🎯 Project URLs
 
+### 🌐 Live Demo (Production)
+**https://configurable-saas-template.pages.dev**
+
+Available pages:
+- `/` - Homepage
+- `/about` - About page
+- `/blog` - Blog placeholder
+- `/contact` - Contact form
+- `/privacy` - Privacy policy
+- `/terms` - Terms of service
+- `/login` - Login page
+- `/signup` - Signup page
+
 ### Local Development
 - **Homepage**: http://localhost:3000
 - **Login**: http://localhost:3000/login
 - **Signup**: http://localhost:3000/signup
 - **API Config**: http://localhost:3000/api/config
 
-### Current Public URL
+### Sandbox URL
 https://3000-itbup1iiwmpcejs833zr0-2b54fc91.sandbox.novita.ai
 
 ## 📊 API Endpoints

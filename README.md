@@ -624,6 +624,28 @@ rm -rf dist .wrangler
 npm run build
 ```
 
+## 🚀 Deployment Info
+
+**Live Production Demo:** This template is already deployed and running at:
+- **URL**: https://configurable-saas-template.pages.dev
+- **Platform**: Cloudflare Pages
+- **Status**: ✅ Active
+- **Build Time**: ~2 seconds
+- **Global CDN**: Edge-deployed in 200+ cities worldwide
+
+**Deployment Steps Used:**
+```bash
+# 1. Build the project
+npm run build
+
+# 2. Deploy to Cloudflare Pages
+npx wrangler pages deploy dist --project-name configurable-saas-template
+
+# Result: Live in seconds! ✨
+```
+
+Want to deploy your own? See the complete deployment guide above!
+
 ## 📄 License
 
 MIT License - Feel free to use this template for your SaaS projects.
@@ -632,8 +654,16 @@ MIT License - Feel free to use this template for your SaaS projects.
 
 For issues or questions, please check the documentation in `config.ts` or consult the Cloudflare Workers/Hono documentation.
 
+## 🔗 Links
+
+- **Live Demo**: https://configurable-saas-template.pages.dev
+- **GitHub**: https://github.com/MichaelTheMay/configurable-SaaS-starter-webpage
+- **Hono Framework**: https://hono.dev
+- **Cloudflare Pages**: https://developers.cloudflare.com/pages
+
 ---
 
 **Last Updated**: 2025-10-27
-**Status**: ✅ Ready for customization and deployment
+**Status**: ✅ Production-ready with live demo
 **Tech Stack**: Hono + TypeScript + Cloudflare Pages + D1 + Stripe + Resend
+**Demo**: https://configurable-saas-template.pages.dev
