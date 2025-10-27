@@ -197,6 +197,7 @@ app.post('/api/leads', async (c) => {
 app.get('/api/config', (c) => {
   // Return public configuration (exclude sensitive keys)
   return c.json({
+    theme: siteConfig.theme,
     company: siteConfig.company,
     hero: siteConfig.hero,
     features: siteConfig.features,
@@ -205,6 +206,7 @@ app.get('/api/config', (c) => {
     social: siteConfig.social,
     cta: siteConfig.cta,
     leadForm: siteConfig.leadForm,
+    pages: siteConfig.pages,
     auth: {
       providers: {
         google: { enabled: siteConfig.auth.providers.google.enabled },
