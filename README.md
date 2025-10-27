@@ -13,9 +13,14 @@ A production-ready SaaS company website template with integrated authentication,
 - **Responsive Design**: Mobile-first design with Tailwind CSS
 - **API Routes**: RESTful API endpoints for all features
 - **Configuration System**: Single config.ts file for all customization
+- **🎨 UI Theme System**: Fully configurable colors, fonts, shadows, and styles
+- **📄 Dynamic Page Routing**: Automatic page generation from config
+- **🎯 Component Library**: Themed buttons, cards, and navigation
 
 ### 📋 Configuration-Driven Design
-All content is managed through a single `config.ts` file:
+All content AND design is managed through a single `config.ts` file:
+
+**Content Configuration:**
 - Company information and branding
 - Hero section content
 - Features list
@@ -25,6 +30,22 @@ All content is managed through a single `config.ts` file:
 - Authentication providers
 - Lead form fields
 - SEO metadata
+
+**🎨 NEW: UI Theme Configuration:**
+- **Colors**: Primary, secondary, success, error, backgrounds
+- **Typography**: Font families (Google Fonts), sizes
+- **Layout**: Max width, header height, nav position
+- **Borders**: Border radius for all components
+- **Shadows**: Box shadows for depth
+- **Buttons**: Complete button style system
+- **Cards**: Card styling and hover effects
+
+**📄 NEW: Custom Pages:**
+- Define unlimited custom pages in config
+- Automatic routing (e.g., /about, /privacy, /terms)
+- Flexible content sections (text, team, forms)
+- Choose which pages appear in menu
+- Shared navigation and footer
 
 ### 🔌 Integrations
 1. **Stripe** - Payment processing and subscriptions
@@ -174,6 +195,75 @@ leadForm: {
 }
 ```
 
+### 🎨 NEW: Customize UI Theme
+```typescript
+// config.ts
+theme: {
+  colors: {
+    primary: "#667eea",        // Your brand color
+    primaryDark: "#764ba2",    // Darker shade
+    secondary: "#4c9aff",      // Accent color
+    // ... more colors
+  },
+  fonts: {
+    primary: "'Poppins', sans-serif",  // Main font
+    heading: "'Montserrat', sans-serif", // Heading font
+  },
+  borderRadius: {
+    lg: "1rem",    // Rounded corners
+  },
+  buttons: {
+    primary: {
+      background: "primary",
+      borderRadius: "lg",
+      padding: "0.75rem 2rem",
+    }
+  }
+}
+```
+
+### 📄 NEW: Add Custom Pages
+```typescript
+// config.ts
+pages: [
+  {
+    path: "/about",
+    title: "About Us",
+    inMenu: true,  // Show in navigation
+    content: {
+      hero: {
+        title: "About Our Company",
+        subtitle: "Our story and mission"
+      },
+      sections: [
+        {
+          type: "text",
+          title: "Who We Are",
+          content: "Your company story here..."
+        },
+        {
+          type: "team",
+          title: "Meet Our Team",
+          members: [
+            {
+              name: "John Doe",
+              role: "CEO",
+              bio: "Leader with 10 years experience",
+              image: "/static/team/john.jpg",
+              social: {
+                linkedin: "https://linkedin.com/in/johndoe",
+                twitter: "https://twitter.com/johndoe"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+  // Add unlimited pages!
+]
+```
+
 ## 🔐 Authentication Setup
 
 ### Email/Password (Already Working)
@@ -310,6 +400,129 @@ npm run db:console:local -- --command="SELECT * FROM users"
 # Query production database
 npm run db:console:prod -- --command="SELECT * FROM leads WHERE status='new'"
 ```
+
+## 🎨 UI Theme Customization
+
+The template includes a powerful theme system that lets you customize every visual aspect from the config file.
+
+### Theme Configuration Options
+
+#### Colors
+- `primary` - Main brand color (buttons, links, accents)
+- `primaryDark` - Darker shade for gradients/hovers
+- `secondary` - Secondary accent color
+- `success/error/warning` - Status colors
+- `background/surface` - Page and card backgrounds
+- `text.primary/secondary/light` - Text colors
+
+#### Typography
+- `fonts.primary` - Main body font (supports Google Fonts)
+- `fonts.heading` - Heading font
+- `fonts.mono` - Monospace font
+- `fontSize` - Complete Tailwind scale
+
+#### Layout
+- `maxWidth` - Maximum content width
+- `headerHeight` - Navigation bar height
+- `navPosition` - Fixed, sticky, or relative navigation
+
+#### Components
+- `borderRadius` - Border radius for all components
+- `shadows` - Box shadow system (sm, md, lg, xl)
+- `buttons` - Complete button style definitions
+- `cards` - Card styling and hover effects
+
+### Quick Theme Examples
+
+**Modern Blue Theme:**
+```typescript
+colors: {
+  primary: "#3b82f6",
+  primaryDark: "#2563eb",
+  // ...
+}
+```
+
+**Warm Orange Theme:**
+```typescript
+colors: {
+  primary: "#f97316",
+  primaryDark: "#ea580c",
+  // ...
+}
+```
+
+**Professional Dark Theme:**
+```typescript
+colors: {
+  primary: "#8b5cf6",
+  background: "#1f2937",
+  surface: "#111827",
+  text: {
+    primary: "#f9fafb",
+    secondary: "#d1d5db",
+  }
+}
+```
+
+## 📄 Dynamic Page System
+
+Create unlimited custom pages without writing code!
+
+### Supported Page Types
+
+1. **Text Sections** - Rich content with headings
+2. **Team Sections** - Team member profiles with photos
+3. **Blog List** - Coming soon placeholder
+4. **Contact Forms** - Uses lead form configuration
+
+### Page Configuration
+
+Each page needs:
+- `path` - URL route (e.g., "/about")
+- `title` - Page title
+- `inMenu` - Show in navigation (true/false)
+- `content` - Page content definition
+
+### Example Pages
+
+**About Page with Team:**
+```typescript
+{
+  path: "/about",
+  title: "About Us",
+  inMenu: true,
+  content: {
+    hero: { title: "About", subtitle: "Our Story" },
+    sections: [
+      { type: "text", title: "Mission", content: "..." },
+      { type: "team", title: "Team", members: [...] }
+    ]
+  }
+}
+```
+
+**Legal Pages (Privacy/Terms):**
+```typescript
+{
+  path: "/privacy",
+  title: "Privacy Policy",
+  inMenu: false,  // Not in main nav
+  content: {
+    hero: { title: "Privacy", subtitle: "Updated: 2024" },
+    sections: [
+      { type: "text", title: "Data Collection", content: "..." },
+      { type: "text", title: "Data Usage", content: "..." }
+    ]
+  }
+}
+```
+
+All pages automatically include:
+- Themed navigation bar
+- Consistent footer
+- Responsive layout
+- SEO metadata
 
 ## 🎯 Next Steps
 
